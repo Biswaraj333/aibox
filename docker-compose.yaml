@@ -418,24 +418,24 @@ services:
       test: ["CMD-SHELL", "curl -s http://localhost:9200 >/dev/null 2>&1 || exit 1"]
       interval: 10s
       retries: 5
-
+   
   kibana:
-    profiles: ["full", "obs_elastic", "obs_full"]
-    image: docker.elastic.co/kibana/kibana:8.12.2
-    ports:
-      - "5601:5601"
-    environment:
-      ELASTICSEARCH_HOSTS: http://elasticsearch:9200
-      XPACK_SECURITY_ENABLED: "false"
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-    networks:
-      - traefik_net
-    healthcheck:
-      test: ["CMD-SHELL", "curl -s http://localhost:5601 >/dev/null 2>&1 || exit 1"]
-      interval: 10s
-      retries: 5
+  profiles: ["full", "obs_elastic", "obs_full"]
+  image: docker.elastic.co/kibana/kibana:8.12.2
+  ports:
+    - "5601:5601"
+  environment:
+    ELASTICSEARCH_HOSTS: http://elasticsearch:9200
+    XPACK_SECURITY_ENABLED: "false"
+  depends_on:
+    - elasticsearch
+  networks:
+    - traefik_net
+  healthcheck:
+    test: ["CMD-SHELL", "curl -s http://localhost:5601 >/dev/null 2>&1 || exit 1"]
+    interval: 10s
+    retries: 5
+
 
   otel-collector:
     profiles: ["full", "obs_otel", "obs_full"]
