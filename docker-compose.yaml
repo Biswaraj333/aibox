@@ -286,7 +286,7 @@ services:
     #   memlock: -1
     #   stack: 67108864
     depends_on:
-      redis:
+      - redis:
         condition: service_healthy
     networks:
       - traefik_net
